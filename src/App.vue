@@ -1,11 +1,28 @@
 <template>
   <v-app>
-   
+    <v-container>
+      <v-card>
+       <v-container>
+         <v-row>
+          <v-col 
+            cols="3" 
+            v-for="poke in pokemon" 
+            :key="poke.name"
+            >
+            <h2>
+              {{ poke.name }}
+            </h2>
+          </v-col>
+         </v-row>
+
+       </v-container>
+      </v-card>
+    </v-container>
   </v-app>
 </template>
 
 <script>
-
+import axios from 'axios';
 export default { 
   name: 'App',
 
@@ -13,10 +30,21 @@ export default {
 
   },
 
-  data: () => ({
-    //
-  }),
+  data() {
+    return {
+      pokemon: []
+    }
+  },
+
+  mounted () {
+  axios.get('https://pokeapi.co/api/v2/pokemon?limit=151').then((response) => {
+    this.pokemon = response.data.results
+  })
+},
+
 };
+
+
 </script>
 
 
