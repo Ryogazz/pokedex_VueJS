@@ -3,15 +3,34 @@
     <v-container>
       <v-card>
        <v-container>
+          <v-text-field
+            label="Digite o nome do pokemon"
+            placeholder="Pikachu"
+            solo
+            v-model="buscar"
+          ></v-text-field>
          <v-row>
           <v-col 
-            cols="3" 
-            v-for="poke in pokemon" 
+            cols="2" 
+            v-for="poke in filtro_busca_pokemon" 
             :key="poke.name"
             >
-            <h2>
-              {{ poke.name }}
-            </h2>
+            <v-card>
+              <v-container>
+                <v-row class="mx-0 d-flex justify-center">
+                  <img 
+                  :src="
+                `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/${ 
+                  get_id(poke) }.gif`" 
+                :alt="poke.name"
+                width="50%"
+                />
+                </v-row>
+                <h2 class="text-center">
+                  {{ get_name(poke) }}
+                </h2>
+              </v-container>
+            </v-card>
           </v-col>
          </v-row>
 
@@ -32,7 +51,8 @@ export default {
 
   data() {
     return {
-      pokemon: []
+      pokemon: [],
+      buscar: '', 
     }
   },
 
@@ -41,6 +61,23 @@ export default {
     this.pokemon = response.data.results
   })
 },
+
+methods: {
+  get_id(pokemon){
+    return Number(pokemon.url.split('/')[6]);
+  },
+  get_name(pokemon){
+    return pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)
+  }
+},
+
+computed: {
+  filtro_busca_pokemon() {
+    return this.pokemon.filter((item) => {
+      return item.name.includes(this.buscar)
+    })
+  }
+}
 
 };
 
