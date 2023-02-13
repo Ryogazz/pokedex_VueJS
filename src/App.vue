@@ -1,8 +1,21 @@
 <template>
   <v-app>
     <v-container>
-      <v-card>
+     
        <v-container >
+        <v-row>
+          <v-container>
+            <v-img
+              :src="require('../src/assets/pokedex.png')"
+              class="my-3"
+              contain
+              height="200"
+            />
+            <h1 class="text-center white--text mb-2" style="font-size: 5rem">
+              Pokedex
+            </h1>
+          </v-container>
+        </v-row>
           <v-text-field
             label="Digite o nome do pokemon"
             placeholder="Pikachu"
@@ -39,7 +52,6 @@
          </v-row>
 
        </v-container>
-      </v-card>
     </v-container>
 
     <v-dialog
